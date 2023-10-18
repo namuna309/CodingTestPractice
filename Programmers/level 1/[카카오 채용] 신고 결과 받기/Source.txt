@@ -1,0 +1,28 @@
+def solution(id_list, report, k):
+    reported_list = {id: set([]) for id in id_list}
+    reporting_list = {id: set([]) for id in id_list}
+    ban_list = []
+    ban_cnt = []
+    
+    for re in report:
+        re_list = re.split(' ')
+        reporter = re_list[0]
+        reportee = re_list[1]
+        
+        reporting_list[reporter].add(reportee)
+        reported_list[reportee].add(reporter)
+        
+    
+    for key, value in reported_list.items():
+        if len(value) >= k:
+            ban_list.append(key)
+                
+    for reportees in reporting_list.values():
+        cnt = 0
+        for reportee in reportees:
+            if reportee in ban_list:
+                cnt += 1
+        
+        ban_cnt.append(cnt)
+        
+    return ban_cnt
